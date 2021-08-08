@@ -37,47 +37,81 @@ export function getSortedPostsData() {
 }
 
 export function getAllPostIds() {
-    const fileNames = fs.readdirSync(postsDirectory)
-  
-    // Returns an array that looks like this:
-    // [
-    //   {
-    //     params: {
-    //       id: 'ssg-ssr'
-    //     }
-    //   },
-    //   {
-    //     params: {
-    //       id: 'pre-rendering'
-    //     }
-    //   }
-    // ]
-    return fileNames.map(fileName => {
-      return {
-        params: {
-          id: fileName.replace(/\.md$/, '')
-        }
-      }
-    })
-  }
+  const fileNames = fs.readdirSync(postsDirectory)
 
-  export async function getPostData(id) {
-    const fullPath = path.join(postsDirectory, `${id}.md`)
-    const fileContents = fs.readFileSync(fullPath, 'utf8')
-  
-    // Use gray-matter to parse the post metadata section
-    const matterResult = matter(fileContents)
-  
-    // Use remark to convert markdown into HTML string
-    const processedContent = await remark()
-      .use(html)
-      .process(matterResult.content)
-    const contentHtml = processedContent.toString()
-  
-    // Combine the data with the id and contentHtml
+  // Returns an array that looks like this:
+  // [
+  //   {
+  //     params: {
+  //       id: 'ssg-ssr'
+  //     }
+  //   },
+  //   {
+  //     params: {
+  //       id: 'pre-rendering'
+  //     }
+  //   }
+  // ]
+  return fileNames.map(fileName => {
     return {
-      id,
-      contentHtml,
-      ...matterResult.data
+      params: {
+        id: fileName.replace(/\.md$/, '')
+      }
     }
+  })
+}
+
+export async function getPostData(id) {
+  const fullPath = path.join(postsDirectory, `${id}.md`)
+  const fileContents = fs.readFileSync(fullPath, 'utf8')
+
+  // Use gray-matter to parse the post metadata section
+  const matterResult = matter(fileContents)
+
+  // Use remark to convert markdown into HTML string
+  const processedContent = await remark()
+    .use(html)
+    .process(matterResult.content)
+  const contentHtml = processedContent.toString()
+
+  // Combine the data with the id and contentHtml
+  return {
+    id,
+    contentHtml,
+    ...matterResult.data
   }
+}
+
+export async function getAllPosts(userName: string) {
+  const response = await fetch(' https://blogservice-001.herokuapp.com/api/v1/blog', {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json',
+      'userName': userName
+    },
+  });
+  const blogs = await response.json();
+  return blogs.blogResponses.map(blog => {
+    return {
+      id: blog.id,
+      name: blog.name,
+      date: blog.createdAt
+    }
+  })
+}
+
+export async function getBlogData(id: string) {
+  const response = await fetch(` https://blogservice-001.herokuapp.com/api/v1/blog/${id}`, {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  });
+  const blog = await response.json();
+  return {
+    id: blog.id,
+    name: blog.name,
+    date: blog.createdAt,
+    content: blog.content
+  }
+}
