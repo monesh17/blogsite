@@ -21,6 +21,9 @@ import CardContent from '@material-ui/core/CardContent';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import { useRouter } from 'next/router';
+import Autocomplete from '@material-ui/lab/Autocomplete';
+import TextField from '@material-ui/core/TextField';
+import utilStyles from '../../styles/utils.module.css';
 
 import dynamic from 'next/dynamic';
 const Editor: any = dynamic(
@@ -32,6 +35,7 @@ const Editor: any = dynamic(
 
 export default function create() {
   const [disableCreateButton, setDisableCreateButton] = useState(false);
+  const [tags, setTags] = useState([]);
   const [editorState, setEditorState] = useState(() =>
     EditorState.createWithContent(
       ContentState.createFromText('Enter Blog Content')
@@ -42,23 +46,6 @@ export default function create() {
   const handleChange = (event) => {
     setTitle(event.target.value);
   };
-  const useStyles = makeStyles({
-    root: {
-      minWidth: 275,
-    },
-    bullet: {
-      display: 'inline-block',
-      margin: '0 2px',
-      transform: 'scale(0.8)',
-    },
-    title: {
-      fontSize: 14,
-    },
-    pos: {
-      marginBottom: 12,
-    },
-  });
-  const classes = useStyles();
 
   const saveBlog = async () => {
     await fetch(' https://blogservice-001.herokuapp.com/api/v1/blog', {
@@ -71,10 +58,14 @@ export default function create() {
         name: title,
         userName: 'Monesh',
         createdAt: '2021-07-25T17:30:00Z',
+        tags: tags,
         content: convertToRaw(editorState.getCurrentContent()),
       }),
     });
     router.push('/');
+  };
+  const onTagsChange = (event, values) => {
+    setTags(values);
   };
   return (
     <>
@@ -86,10 +77,27 @@ export default function create() {
           <InputLabel htmlFor="component-simple">Enter Blog Title</InputLabel>
           <Input id="component-simple" value={title} onChange={handleChange} />
         </FormControl>
-        <Card className={classes.root}>
+        <Card className={utilStyles.root}>
+          <Typography variant="h5" component="h2">
+            <Autocomplete
+              multiple
+              id="tags-filled"
+              options={['']}
+              freeSolo
+              onChange={onTagsChange}
+              renderInput={(params) => (
+                <TextField
+                  {...params}
+                  variant="filled"
+                  label="Enter Tags"
+                  placeholder="Press Enter after typing a tag"
+                />
+              )}
+            />
+          </Typography>
           <CardContent>
             <Typography
-              className={classes.title}
+              className={utilStyles.title}
               color="textSecondary"
               gutterBottom
             >

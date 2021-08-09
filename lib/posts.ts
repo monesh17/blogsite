@@ -108,10 +108,12 @@ export async function getBlogData(id: string) {
     },
   });
   const blog = await response.json();
+  console.log('blog recieved is ', blog);
   return {
     id: blog.id,
     name: blog.name,
     date: blog.createdAt,
+    tags: blog.tags,
     content: blog.content
   }
 }

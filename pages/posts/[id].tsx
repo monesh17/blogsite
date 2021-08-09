@@ -11,6 +11,8 @@ import React, { useState } from 'react';
 import dynamic from 'next/dynamic';
 import utilStyles from '../../styles/utils.module.css';
 import { useRouter } from 'next/router';
+import { Autocomplete } from '@material-ui/lab';
+import { TextField } from '@material-ui/core';
 
 const Editor: any = dynamic(
   () => {
@@ -25,12 +27,15 @@ export default function Post({
     id: string;
     name: string;
     date: string;
+    tags: string[];
     content: string;
   };
 }) {
+  console.log('postData is ', postData);
   const [editorState, setEditorState] = useState(() =>
     EditorState.createWithContent(convertFromRaw(postData.content))
   );
+  const [tags, setTags] = useState(postData.tags);
   const router = useRouter();
   const updateBlog = async () => {
     await fetch(' https://blogservice-001.herokuapp.com/api/v1/blog', {
@@ -40,6 +45,7 @@ export default function Post({
       },
       body: JSON.stringify({
         id: postData.id,
+        tags: tags,
         content: convertToRaw(editorState.getCurrentContent()),
       }),
     });
@@ -57,12 +63,33 @@ export default function Post({
     );
     router.push('/');
   };
+  const onTagsChange = (event, values) => {
+    setTags(values);
+  };
   return (
     <ContentLayout>
       <Card className={utilStyles.root}>
         <CardContent>
           <Typography variant="h5" component="h2">
             {postData.name}
+          </Typography>
+          <Typography variant="h5" component="h2">
+            <Autocomplete
+              multiple
+              id="tags-filled"
+              options={['']}
+              freeSolo
+              defaultValue={postData.tags}
+              onChange={onTagsChange}
+              renderInput={(params) => (
+                <TextField
+                  {...params}
+                  variant="filled"
+                  label="Enter Tags"
+                  placeholder="Press Enter after typing a tag"
+                />
+              )}
+            />
           </Typography>
           <Typography
             className={utilStyles.title}
