@@ -1,10 +1,10 @@
 import Head from 'next/head';
-import Layout, { siteTitle } from '../components/layout';
+import Layout from '../components/blog-layout';
 import utilStyles from '../styles/utils.module.css';
 import { getAllPosts, getSortedPostsData } from '../lib/posts';
 import Link from 'next/link';
 import Date from '../components/date';
-import { GetStaticProps } from 'next';
+import { useAuth } from '../pages/auth/UserContext';
 
 export default function Home({
   allPostsData,
@@ -16,19 +16,10 @@ export default function Home({
   }[];
 }) {
   return (
-    <Layout home>
+    <Layout>
       <Head>
-        <title>{siteTitle}</title>
+        <title>{'Monesh Blog Site'}</title>
       </Head>
-      <section className={utilStyles.headingMd}>
-        <p>Personal Blog Site</p>
-        <p>( Under Development - more to come soon )</p>
-      </section>
-      <section className={`${utilStyles.headingMd} ${utilStyles.padding1px}`}>
-        <Link href="/blog/create">
-          <a>Create Blog</a>
-        </Link>
-      </section>
       <section className={`${utilStyles.headingMd} ${utilStyles.padding1px}`}>
         <h2 className={utilStyles.headingLg}>Blog</h2>
         <ul className={utilStyles.list}>

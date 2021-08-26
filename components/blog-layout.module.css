@@ -1,0 +1,15 @@
+.toolbar {
+  flex-wrap: 'wrap';
+}
+.toolbarTitle {
+  flex-grow: 1;
+}
+.link {
+  margin: 0.5rem !important;
+}
+.main {
+  padding: 3%;
+}
+.footer {
+  border-top: 3px solid #bbb;
+}

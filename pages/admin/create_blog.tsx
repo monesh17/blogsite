@@ -7,8 +7,8 @@ import {
 } from 'draft-js';
 import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
 import Head from 'next/head';
-import ContentLayout from '../../components/content-layout';
-import styles from './create.module.css';
+import ContentLayout from '../../components/blog-layout';
+import styles from './create_blog.module.css';
 import fetch from 'node-fetch';
 import { v4 as uuidv4 } from 'uuid';
 import FormControl from '@material-ui/core/FormControl';
@@ -33,7 +33,7 @@ const Editor: any = dynamic(
   { loading: () => null, ssr: false }
 );
 
-export default function create() {
+export default function createBlog() {
   const [disableCreateButton, setDisableCreateButton] = useState(false);
   const [tags, setTags] = useState([]);
   const [editorState, setEditorState] = useState(() =>
@@ -48,6 +48,7 @@ export default function create() {
   };
 
   const saveBlog = async () => {
+    setDisableCreateButton(true);
     await fetch(' https://blogservice-001.herokuapp.com/api/v1/blog', {
       method: 'POST',
       headers: {
