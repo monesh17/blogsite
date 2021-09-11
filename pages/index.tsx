@@ -4,7 +4,7 @@ import utilStyles from '../styles/utils.module.css';
 import { getAllPosts, getSortedPostsData } from '../lib/posts';
 import Link from 'next/link';
 import Date from '../components/date';
-import { useAuth } from '../pages/auth/UserContext';
+import { useAuth } from '../context/UserContext';
 
 export default function Home({
   allPostsData,

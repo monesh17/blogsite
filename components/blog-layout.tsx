@@ -10,7 +10,7 @@ import Link from '@material-ui/core/Link';
 import styles from './blog-layout.module.css';
 import Container from '@material-ui/core/Container';
 import { useRouter } from 'next/router';
-import { useAuth } from '../pages/auth/UserContext';
+import { useAuth } from '../context/UserContext';
 import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
