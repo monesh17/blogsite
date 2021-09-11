@@ -98,14 +98,26 @@ export default function BlogLayout({
               About
             </Link>
           </nav>
-          <Button
-            color="primary"
-            variant="outlined"
-            onClick={handleDialogOpen}
-            className={styles.link}
-          >
-            Login
-          </Button>
+          {!validateAdminUser(user) && (
+            <Button
+              color="primary"
+              variant="outlined"
+              onClick={handleDialogOpen}
+              className={styles.link}
+            >
+              Login
+            </Button>
+          )}
+          {validateAdminUser(user) && (
+            <Link
+              variant="button"
+              color="textPrimary"
+              href="/"
+              className={styles.link}
+            >
+              Back To Home
+            </Link>
+          )}
         </Toolbar>
       </AppBar>
       <Drawer
@@ -125,16 +137,18 @@ export default function BlogLayout({
         </div>
         <Divider />
         <List>
-          {['Personal Blogs', 'Create Blog', 'About Author'].map((text, index) => (
-            <Link href={`/admin/${text.toLowerCase().replace(/ /g, '_')}`}>
-              <ListItem button key={text}>
-                <ListItemIcon>
-                  {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
-                </ListItemIcon>
-                <ListItemText primary={text} />
-              </ListItem>
-            </Link>
-          ))}
+          {['Personal Blogs', 'Create Blog', 'About Author'].map(
+            (text, index) => (
+              <Link href={`/admin/${text.toLowerCase().replace(/ /g, '_')}`}>
+                <ListItem button key={text}>
+                  <ListItemIcon>
+                    {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
+                  </ListItemIcon>
+                  <ListItemText primary={text} />
+                </ListItem>
+              </Link>
+            )
+          )}
         </List>
         <Divider />
       </Drawer>

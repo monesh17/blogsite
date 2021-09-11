@@ -8,9 +8,9 @@ import React, {
 
 type authContextType = {
   user: {
-    userName?: string,
-    password?: string,
-    admin?: boolean
+    userName?: string;
+    password?: string;
+    admin?: boolean;
   };
   login: (userName: string, password: string) => void;
   logout: () => void;
@@ -72,9 +72,9 @@ export function AuthProvider({ children }: Props) {
 
   useEffect(() => {
     const loggedInUser = async () => {
-      const { user } = await userFromSession();
-      console.log('logged in user is ', user);
-      setUser(user);
+      const userData:any = await userFromSession();
+      console.log('logged in user is ', userData.user);
+      setUser(userData.user);
     };
     loggedInUser();
   }, []);
