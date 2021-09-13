@@ -44,7 +44,7 @@ export function AuthProvider({ children }: Props) {
       method: 'POST',
       headers: { 'Content-Type': 'application/json',
       'Access-Control-Allow-Credentials': 'true' },
-      body: '{ userName, password }',
+      body: JSON.stringify({ 'userName':'test', 'password':'test' }),
     });
     setUser({
       userName: userName,
