@@ -1,6 +1,6 @@
 import { getBlogData } from '../../lib/posts';
 import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
-import ContentLayout from '../../components/content-layout';
+import ContentLayout from '../../components/blog-layout';
 import Card from '@material-ui/core/Card';
 import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
@@ -100,6 +100,7 @@ export default function Post({
           </Typography>
           <Editor
             editorState={editorState}
+            readOnly={true}
             onEditorStateChange={setEditorState}
             wrapperClassName={utilStyles.wrapperClass}
             editorClassName={utilStyles.editorClass}
