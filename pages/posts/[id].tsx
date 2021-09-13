@@ -106,7 +106,7 @@ export default function Post({
             toolbarClassName={utilStyles.toolbarClass}
           />
         </CardContent>
-        <CardActions>
+       {/*  <CardActions>
           <Button variant="contained">Cancel</Button>
           <Button onClick={updateBlog} variant="contained" color="primary">
             Update
@@ -114,7 +114,7 @@ export default function Post({
           <Button onClick={deleteBlog} variant="contained" color="secondary">
             Delete
           </Button>
-        </CardActions>
+        </CardActions> */}
       </Card>
     </ContentLayout>
   );
