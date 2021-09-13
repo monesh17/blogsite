@@ -42,7 +42,8 @@ export function AuthProvider({ children }: Props) {
   const login = async (userName, password) => {
     await fetch('/api/login', {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
+      headers: { 'Content-Type': 'application/json',
+      'Access-Control-Allow-Credentials': 'true' },
       body: JSON.stringify({ userName, password }),
     });
     setUser({
@@ -53,7 +54,8 @@ export function AuthProvider({ children }: Props) {
 
   const logout = async () => {
     await fetch('/api/logout', {
-      headers: { 'Content-Type': 'application/json' },
+      headers: { 'Content-Type': 'application/json',
+      'Access-Control-Allow-Credentials': 'true' },
     });
   };
 
@@ -64,7 +66,8 @@ export function AuthProvider({ children }: Props) {
   };
   const userFromSession = async () => {
     let response = await fetch('/api/user', {
-      headers: { 'Content-Type': 'application/json' },
+      headers: { 'Content-Type': 'application/json',
+      'Access-Control-Allow-Credentials': 'true' },
     });
     response = await response.json();
     return response;
