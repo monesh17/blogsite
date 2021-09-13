@@ -17,7 +17,7 @@ export default withIronSession(handler, {
     password: process.env.APPLICATION_SECRET,
     cookieName: "blog_user",
     // if your localhost is served on http:// then disable the secure flag
-   /*  cookieOptions: {
+    cookieOptions: {
         secure: process.env.NODE_ENV === "production",
-    }, */
+    },
 });
