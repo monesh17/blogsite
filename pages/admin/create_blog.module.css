@@ -5,6 +5,7 @@
   .editorClass {
     padding: 1rem;
     border: 1px solid #ccc;
+    height: 50vh;
   }
   .toolbarClass {
     border: 1px solid #ccc;

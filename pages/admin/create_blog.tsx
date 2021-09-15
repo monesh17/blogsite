@@ -24,6 +24,8 @@ import { useRouter } from 'next/router';
 import Autocomplete from '@material-ui/lab/Autocomplete';
 import TextField from '@material-ui/core/TextField';
 import utilStyles from '../../styles/utils.module.css';
+import { useAuth } from '../../context/UserContext';
+
 
 import dynamic from 'next/dynamic';
 const Editor: any = dynamic(
@@ -38,11 +40,15 @@ export default function createBlog() {
   const [tags, setTags] = useState([]);
   const [editorState, setEditorState] = useState(() =>
     EditorState.createWithContent(
-      ContentState.createFromText('Enter Blog Content')
+      ContentState.createFromText('')
     )
   );
   const [title, setTitle] = useState('');
   const router = useRouter();
+  const { user } = useAuth();
+  const cancelClick = () => {
+    router.push('/admin/personal_blogs');
+  };
   const handleChange = (event) => {
     setTitle(event.target.value);
   };
@@ -57,7 +63,7 @@ export default function createBlog() {
       body: JSON.stringify({
         id: uuidv4(),
         name: title,
-        userName: 'Monesh',
+        userName: user.userName,
         createdAt: '2021-07-25T17:30:00Z',
         tags: tags,
         content: convertToRaw(editorState.getCurrentContent()),
@@ -115,7 +121,7 @@ export default function createBlog() {
             </Typography>
           </CardContent>
           <CardActions>
-            <Button variant="contained">Cancel</Button>
+            <Button onClick={cancelClick} variant="contained">Cancel</Button>
             <Button
               onClick={saveBlog}
               disabled={disableCreateButton}
