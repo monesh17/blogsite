@@ -73,7 +73,7 @@ export default function Post({
           <Typography variant="h5" component="h2">
             {postData.name}
           </Typography>
-          <Typography variant="h5" component="h2">
+          {/* <Typography variant="h5" component="h2">
             <Autocomplete
               multiple
               id="tags-filled"
@@ -90,17 +90,20 @@ export default function Post({
                 />
               )}
             />
-          </Typography>
-          <Typography
+          </Typography> */}
+         {/*  <Typography
             className={utilStyles.title}
             color="textSecondary"
             gutterBottom
           >
             Blog Content
-          </Typography>
+          </Typography> */}
           <Editor
             editorState={editorState}
             readOnly={true}
+            toolbar={{
+              options: [],
+            }}
             onEditorStateChange={setEditorState}
             wrapperClassName={utilStyles.wrapperClass}
             editorClassName={utilStyles.editorClass}
