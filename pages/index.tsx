@@ -1,11 +1,8 @@
 import Head from 'next/head';
-import React, {
-  useEffect,
-  useState,
-} from 'react';
+import React, { useEffect, useState } from 'react';
 import Layout from '../components/blog-layout';
 import utilStyles from '../styles/utils.module.css';
-import { getAllPosts } from '../lib/posts';
+import { getAllPostsForGeneral } from '../lib/posts';
 import Link from 'next/link';
 import Date from '../components/date';
 
@@ -16,7 +13,7 @@ export default function Home() {
   useEffect(() => {
     const loadBlogs = async () => {
       try {
-        const allPostsData = await getAllPosts('monesh');
+        const allPostsData = await getAllPostsForGeneral();
         setBlogData(allPostsData);
       } catch (error) {}
 

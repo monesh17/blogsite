@@ -1,6 +1,42 @@
-export async function getAllPosts(userName: string) {
+export async function getAllPostsForUser(userName: string) {
   console.log('username for reqeust is ',userName);
   const response = await fetch(' https://blogservice-001.herokuapp.com/api/v1/blog', {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json',
+      'userName': userName
+    },
+  });
+  const blogs = await response.json();
+  return blogs.blogResponses.map(blog => {
+    return {
+      id: blog.id,
+      name: blog.name,
+      date: blog.createdAt
+    }
+  })
+}
+
+export async function getAllPostsForGeneral() {
+  const response = await fetch(' https://blogservice-001.herokuapp.com/api/v1/blog/general', {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+  });
+  const blogs = await response.json();
+  return blogs.blogResponses.map(blog => {
+    return {
+      id: blog.id,
+      name: blog.name,
+      date: blog.createdAt
+    }
+  })
+}
+
+export async function getSecuredBlogs(userName: string) {
+  console.log('username for reqeust is ',userName);
+  const response = await fetch(' https://blogservice-001.herokuapp.com/api/v1/blog/secured', {
     method: 'GET',
     headers: {
       'Content-Type': 'application/json',

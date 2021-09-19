@@ -137,7 +137,7 @@ export default function BlogLayout({
         </div>
         <Divider />
         <List>
-          {['Personal Blogs', 'Create Blog', 'About Author'].map(
+          {['Personal Blogs', 'Create Blog', 'Secured Blogs'].map(
             (text, index) => (
               <Link href={`/admin/${text.toLowerCase().replace(/ /g, '_')}`}>
                 <ListItem button key={text}>

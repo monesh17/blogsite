@@ -6,10 +6,10 @@ import Typography from '@material-ui/core/Typography';
 import Link from 'next/link';
 import Date from '../../components/date';
 import utilStyles from '../../styles/utils.module.css';
-import { getAllPostsForUser } from '../../lib/posts';
+import { getSecuredBlogs } from '../../lib/posts';
 import { useAuth } from '../../context/UserContext';
 
-export default function personalBlogs() {
+export default function securedBlogs() {
   const [showLoadingIndicator, setShowLoadingIndicator] = useState(true);
   const [blogData, setBlogData] = useState([]);
   const { user } = useAuth();
@@ -18,7 +18,7 @@ export default function personalBlogs() {
     const loadBlogs = async (userDetails: any) => {
       try {
         if (userDetails) {
-          const allPostsData = await getAllPostsForUser(userDetails.userName);
+          const allPostsData = await getSecuredBlogs(userDetails.userName);
           setBlogData(allPostsData);
         }
       } catch (error) {
@@ -33,7 +33,7 @@ export default function personalBlogs() {
       <BlogLayout>
         <Card>
           <Typography variant="h5" component="h2">
-            Personal Space
+            Secured Blogs
           </Typography>
           <CardContent>
             <Typography variant="h6" component="h6">
@@ -42,7 +42,7 @@ export default function personalBlogs() {
                 <ul className={utilStyles.list}>
                   {blogData.map(({ id, date, name }) => (
                     <li className={utilStyles.listItem} key={id}>
-                      <Link href={`/admin/update/${id}`}>
+                      <Link href={`/posts/${id}`}>
                         <a>{name}</a>
                       </Link>
                       <br />

@@ -25,7 +25,8 @@ import Autocomplete from '@material-ui/lab/Autocomplete';
 import TextField from '@material-ui/core/TextField';
 import utilStyles from '../../styles/utils.module.css';
 import { useAuth } from '../../context/UserContext';
-
+import MenuItem from '@material-ui/core/MenuItem';
+import Select from '@material-ui/core/Select';
 
 import dynamic from 'next/dynamic';
 const Editor: any = dynamic(
@@ -39,13 +40,16 @@ export default function createBlog() {
   const [disableCreateButton, setDisableCreateButton] = useState(false);
   const [tags, setTags] = useState([]);
   const [editorState, setEditorState] = useState(() =>
-    EditorState.createWithContent(
-      ContentState.createFromText('')
-    )
+    EditorState.createWithContent(ContentState.createFromText(''))
   );
   const [title, setTitle] = useState('');
   const router = useRouter();
   const { user } = useAuth();
+  const [secured, setSecured] = React.useState('true');
+
+  const handleSecuredChange = (event) => {
+    setSecured(event.target.value);
+  };
   const cancelClick = () => {
     router.push('/admin/personal_blogs');
   };
@@ -64,6 +68,7 @@ export default function createBlog() {
         id: uuidv4(),
         name: title,
         userName: user.userName,
+        isSecured: secured,
         createdAt: '2021-07-25T17:30:00Z',
         tags: tags,
         content: convertToRaw(editorState.getCurrentContent()),
@@ -74,6 +79,7 @@ export default function createBlog() {
   const onTagsChange = (event, values) => {
     setTags(values);
   };
+
   return (
     <>
       <ContentLayout>
@@ -102,6 +108,23 @@ export default function createBlog() {
               )}
             />
           </Typography>
+          <Typography variant="h5" component="h2">
+            <InputLabel id="Secured Label">Secured</InputLabel>
+            <Select
+              labelId="demo-simple-select-autowidth-label"
+              id="demo-simple-select-autowidth"
+              value={secured}
+              onChange={handleSecuredChange}
+              autoWidth
+              label="Secured"
+            >
+              <MenuItem value="">
+                <em>None</em>
+              </MenuItem>
+              <MenuItem value={'true'}>True</MenuItem>
+              <MenuItem value={'false'}>False</MenuItem>
+            </Select>
+          </Typography>
           <CardContent>
             <Typography
               className={utilStyles.title}
@@ -121,7 +144,9 @@ export default function createBlog() {
             </Typography>
           </CardContent>
           <CardActions>
-            <Button onClick={cancelClick} variant="contained">Cancel</Button>
+            <Button onClick={cancelClick} variant="contained">
+              Cancel
+            </Button>
             <Button
               onClick={saveBlog}
               disabled={disableCreateButton}
