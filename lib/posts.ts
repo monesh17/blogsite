@@ -67,6 +67,7 @@ export async function getBlogData(id: string) {
     name: blog.name,
     date: blog.createdAt,
     tags: blog.tags,
-    content: blog.content
+    content: blog.content,
+    isSecured: blog.isSecured
   }
 }
